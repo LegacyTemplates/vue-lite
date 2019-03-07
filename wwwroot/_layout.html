@@ -15,9 +15,10 @@
         {{page}}
     </div>
 
+    {{ (debug ? '' : '.min') | assignTo: minjs }}
     {{ [
-        '/lib/vue/dist/vue.js',
-        '/lib/vue-router/dist/vue-router.js',
+        `/lib/vue/dist/vue${minjs}.js`,
+        `/lib/vue-router/dist/vue-router${minjs}.js`,
         '/lib/vue-class-component/vue-class-component.js',
         '/lib/vue-property-decorator/vue-property-decorator.umd.js',
     ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:'/js/lib.bundle.js' }) }}
