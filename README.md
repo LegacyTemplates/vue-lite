@@ -15,9 +15,9 @@ Install with `web` .NET Core tool:
 ### About
 
 This template goal is to provide the richest suite of functionality with the least amount of complexity. 
-TypeScript was chosen because it has no dependencies, runs as a global tool and enables us to use the 
-latest JavaScript language features which allows us to develop with the same source code as a fully-fledged 
-npm webpack build system if you wish to upgrade to one in future.
+TypeScript was adopted because it runs as a non-invasive global tool with no dependencies and enables us to use 
+the latest JavaScript language features to be able to develop with the same source code as a fully-fledged 
+npm webpack build system should you wish to upgrade to one in future.
 
 ### Development workflow
 
