@@ -4,13 +4,13 @@
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
 
-> Browse [source code](https://github.com/NetCoreTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-spa.web-templates.io)
+> Browse [source code](https://github.com/NetCoreTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-lite.web-templates.io)
 
 Install with `web` .NET Core tool:
 
     $ dotnet tool install -g web
 
-    $ web new vue-spa ProjectName
+    $ web new vue-lite ProjectName
 
 ### About
 
