@@ -1,6 +1,7 @@
 {{* run in host dir with: web run wwwroot/_bundle.ss *}}
 
 {{ false | assignTo: debug }}
+{{ ['/js/lib.bundle.js','/js/bundle.js'] | map => fileDelete(it) | end }}
 
 {{ ['/assets/css/'] | bundleCss({ minify:debug, disk:!debug, bundle:!debug })  }}
 

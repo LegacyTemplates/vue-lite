@@ -2,6 +2,10 @@
 
 .NET Core 2.1 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
 
+[![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
+
+> Browse [source code](https://github.com/NetCoreTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-spa.web-templates.io)
+
 Install with `web` .NET Core tool:
 
     $ dotnet tool install -g web
