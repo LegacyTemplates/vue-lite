@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title ?? 'MyApp' }}</title>
+    {{ ['/assets/css/'] | bundleCss({ minify:debug, disk:!debug, bundle:!debug })  }}
+</head>
+<body>
+    <i hidden>{{ '/js/hot-loader.js' | ifDebugIncludeScript }}</i>
+    <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
+
+    <div id="app">
+        {{page}}
+    </div>
+
+    {{ [
+        '/lib/vue/dist/vue.js',
+        '/lib/vue-router/dist/vue-router.js',
+        '/lib/vue-class-component/vue-class-component.js',
+        '/lib/vue-property-decorator/vue-property-decorator.umd.js',
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:'/js/lib.bundle.js' }) }}
+
+    <script>
+        var ALIASES = {
+            'vue': { default: Vue },
+            'vue-router': { default: VueRouter },
+            'vue-class-component': VueClassComponent,
+            'vue-property-decorator': window['vue-property-decorator']
+        };
+        window.exports = {};
+        window.require = function(name) {
+            return ALIASES[name] || exports[name] || window[name] || exports;
+        };
+    </script>
+
+    {{ [
+        '/lib/@servicestack/client/index.js',
+        'content:/src/components/',
+        'content:/src/shared/',
+        'content:/src/',
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:'/js/bundle.js' }) }}
+
+    {{ scripts | raw }} 
+
+</body>
+</html>
