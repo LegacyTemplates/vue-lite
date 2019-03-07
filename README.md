@@ -21,6 +21,10 @@ All that's needed during development is to run TypeScript in "watch" mode:
 
     $ tsc -w
 
+To update all generated `*dtos.ts`, run:
+
+    $ web ts
+
 The built-in hot-reloading will monitor both the current pages dependent `*.html` files and monitor for any `*.js` changes
 that TypeScript generates on save.
 
