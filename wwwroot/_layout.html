@@ -8,7 +8,7 @@
     {{ ['/assets/css/'] | bundleCss({ minify:debug, disk:!debug, bundle:!debug })  }}
 </head>
 <body>
-    <i hidden>{{ '/js/hot-loader.js' | ifDebugIncludeScript }}</i>
+    <i hidden>{{ '/js/hot-loader.js'     | ifDebugIncludeScript }}</i>
     <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
 
     <div id="app">
