@@ -38,3 +38,12 @@ an in-memory minified cached bundle for production releases, or optionally the s
 can be used to generate a more optimized bundle using NUglify with:
 
     $ web run wwwroot\_bundle.ss
+
+### Publishing and deployment
+
+The standard .NET Core tools can be used to publish:
+
+    $ dotnet publish -c Release
+
+Then deploy as normal, e.g. via [rsync deployments to Linux](https://docs.servicestack.net/netcore-deploy-rsync) or to an 
+[AWS EC2 container using Docker](https://docs.servicestack.net/deploy-netcore-docker-aws-ecs).
