@@ -1,9 +1,11 @@
-{{* run in host dir with: web run wwwroot/_bundle.ss *}}
+{{* run in host project directory with `web run wwwroot/_bundle.ss` *}}
 
-{{ false | assignTo: debug }}
 {{ ['/css/bundle.css','/js/lib.bundle.js','/js/bundle.js'] | map => fileDelete(it) | end }}
 
-{{ ['/assets/css/'] | bundleCss({ minify:debug, disk:!debug, bundle:!debug })  }}
+{{ false | assignTo: debug }}
+{{* Copy same bundle defintions from _layout.html as-is *}}
+
+{{ ['/assets/css/'] | bundleCss({ minify:debug, cache:!debug, disk:!debug }) }}
 
 {{ (debug ? '' : '.min') | assignTo: minjs }}
 {{ [
