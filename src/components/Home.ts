@@ -6,14 +6,14 @@ import { bus, client, Hello } from '../shared'
         <div class="row">
             <div class="form-group">
                 <div>/hello API:</div>
-                <input class="form-control" type="text" placeholder="Your name" v-model="txtName" />
+                <Input v-model="txtName" placeholder="Your name" />
                 <h3 class="result pt-2">{{ result }}</h3>
             </div>
         </div>
         <div class="row">
             <div v-if="isAuthenticated">
                 <p class="pt-3">Hi {{userSession.displayName}}!</p> 
-                <a class="btn btn-primary" href="#" @click="signout">Sign Out</a>
+                <a class="btn btn-primary" href="javascript:void(0)" @click="signout">Sign Out</a>
             </div>
             <div v-else>
                 <p class="pt-3">You're not authenticated, please Sign In:</p>
@@ -52,5 +52,4 @@ export class Home extends Vue {
     async signout() {
         bus.$emit('signout');
     }
-
 }

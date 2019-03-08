@@ -1,10 +1,11 @@
 import Vue from 'vue';
-import { checkAuth } from './shared';
+import { checkAuth, store } from './shared';
 import { router } from './shared/router';
 
 const app = new Vue({
     el: '#app',
     router,
+    data: store
 });
 
 checkAuth();

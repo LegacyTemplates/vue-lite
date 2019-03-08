@@ -1,3 +1,7 @@
+declare class InputEvent {
+    target:HTMLInputElement
+}
+
 interface Vue {
     readonly $el: Element;
     readonly $options: any;
@@ -49,6 +53,9 @@ interface VueConstructor<V extends Vue = Vue> {
     set<T>(array: T[], key: number, value: T): T;
     delete(object: object, key: string | number): void;
     delete<T>(array: T[], key: number): void;
+
+    component(id: string): VueConstructor;
+    component(id: string, definition?: any): any;
 }
 
 declare module 'vue' {

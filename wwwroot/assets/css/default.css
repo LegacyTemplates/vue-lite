@@ -4,3 +4,9 @@ body {
     border-radius: 0;
     background: #41B883 !important;
 }
+a {
+    color: #41B883;
+}
+.form-check.form-control {
+    padding-left: 1.75rem;
+}
