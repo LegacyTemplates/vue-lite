@@ -33,5 +33,8 @@ The built-in hot-reloading will monitor both the current pages dependent `*.html
 that TypeScript generates on save.
 
 The integrated bundling is configured to use an optimal unminified in-memory bundle during development and
-an in-memory minified cached bundle for production releases, or optionally the same bundling config in `_bundle.ss`
-can be used to generate a more optimized bundle using NUglify.
+an in-memory minified cached bundle for production releases, or optionally the same bundling config in 
+[_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/wwwroot/_bundle.ss)
+can be used to generate a more optimized bundle using NUglify with:
+
+    $ web run wwwroot\_bundle.ss
