@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ ['/assets/css/'] | bundleCss({ minify:debug, cache:!debug, disk:!debug })  }}
+    {{ ['/assets/css/'] | bundleCss({ minify:!debug, cache:!debug, disk:!debug }) }}
 </head>
 <body>
     <i hidden>{{ '/js/hot-loader.js'     | ifDebugIncludeScript }}</i>
@@ -21,7 +21,8 @@
         `/lib/vue-router/dist/vue-router${minjs}.js`,
         '/lib/vue-class-component/vue-class-component.js',
         '/lib/vue-property-decorator/vue-property-decorator.umd.js',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:'/js/lib.bundle.js' }) }}
+        '/lib/@servicestack/client/servicestack-client.umd.js',
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/lib.bundle${minjs}.js` }) }}
 
     <script>
         var ALIASES = {
@@ -37,11 +38,10 @@
     </script>
 
     {{ [
-        '/lib/@servicestack/client/index.js',
         'content:/src/components/',
         'content:/src/shared/',
         'content:/src/',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:'/js/bundle.js' }) }}
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${minjs}.js` }) }}
 
     {{ scripts | raw }} 
 
