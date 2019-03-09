@@ -10,6 +10,10 @@
       "*": [
         "wwwroot/lib/*",
       ],
+      "vue": ["typings/vue"],
+      "vue-router": ["typings/vue-router"],
+      "vue-class-component": ["typings/vue-class-component"],
+      "vue-property-decorator": ["typings/vue-property-decorator"]
     }
   }
 }

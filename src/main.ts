@@ -6,6 +6,6 @@ const app = new Vue({
     el: '#app',
     router,
     data: store
-});
+} as any);
 
 checkAuth();
