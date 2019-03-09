@@ -7,8 +7,8 @@
 *.userosscache
 *.sln.docstates
 src/**/*.js
-*.bundle.min.css
-*.bundle.min.js
+*bundle.min.css
+*bundle.min.js
 
 
 # User-specific files (MonoDevelop/Xamarin Studio)
