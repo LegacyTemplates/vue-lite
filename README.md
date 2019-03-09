@@ -25,21 +25,32 @@ All that's needed during development is to run TypeScript in "watch" mode:
 
     $ tsc -w
 
-To update all generated `*dtos.ts`, run:
+Which monitors any changes to any `.ts` files and incrementally compiles their `.js` files on save. ServiceStack's built-in 
+[static files](https://docs.servicestack.net/templates-single-page-apps#optimal-dev-workflow-with-hot-reloading) hot-reloading detects 
+changes to any `.js` files to automatically reload the page, whilst the built-in [dynamic .html page](https://sharpscript.net/docs/hot-reloading) 
+monitors for changes to any of its dependent resources.
+
+In a new Terminal window start your .NET Web App HTTP Server with:
+
+    $ dotnet watch run
+
+Using `watch run` will monitor changes to `C#` source files where it will automatically re-build and restart the Server.
+
+After changing your ServiceStack Services, you can re-generate their [Typed TypeScript DTOs](https://docs.servicestack.net/typescript-add-servicestack-reference) with:
 
     $ web ts
 
-The built-in hot-reloading will monitor both the current pages dependent `*.html` files and monitor for any `*.js` changes
-that TypeScript generates on save.
+#### Bundling
 
-The integrated bundling is configured to use an optimal unminified in-memory bundle during development and
-an in-memory minified cached bundle for production releases, or optionally the same bundling config in 
-[_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/wwwroot/_bundle.ss)
-can be used to generate a more optimized bundle using NUglify with:
+The integrated `.js` and `.css` bundling is configured to use an fast unminified in-memory bundle for optimal development experience whilst
+it utilizes a cached in-memory minified bundle created on first request in production releases. 
+
+Optionally the same bundling configuration can be used in [_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/wwwroot/_bundle.ss)
+to generate and save a more advanced optimized bundle using NUglify with:
 
     $ web run wwwroot\_bundle.ss
 
-### Publishing and deployment
+### Publishing and Deployment
 
 The standard .NET Core tools can be used to publish:
 
