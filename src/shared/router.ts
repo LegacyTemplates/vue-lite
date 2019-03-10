@@ -8,9 +8,9 @@ import { RouteConfig } from 'vue-router';
 const routes:RouteConfig[] = [
     { path: '/', component: Home as any },
     { path: '/about', component: About },
-    { path: '/signin', component: SignIn },
+    { path: '/login', component: SignIn, props: (route) => ({ redirect: route.query.redirect }) },
     { path: '/signup', component: SignUp },
-    { path: '*', redirect: '/' },
+    //{ path: '*', redirect: '/' },
 ];
 
 export const router = new Router ({
@@ -18,3 +18,12 @@ export const router = new Router ({
     linkActiveClass: 'active',
     routes,
 });
+
+export const redirect = (path:string) => {
+    const externalUrl = path.indexOf('://') >= 0;
+    if (!externalUrl) {
+        router.push({ path });
+    } else {
+        location.href = path;
+    }
+}

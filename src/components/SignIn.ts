@@ -1,6 +1,6 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import { bus, client, Authenticate } from '../shared'
-import { router } from '../shared/router';
+import { redirect } from '../shared/router';
 
 @Component({ template: 
     `<div>
@@ -36,7 +36,10 @@ import { router } from '../shared/router';
                 <a class="btn btn-outline-info btn-sm" href="javascript:void(0)" @click.prevent="switchUser('new@user.com')">new@user.com</a>
             </p>
         </div>
-    </div>`
+    </div>`,
+    props: { 
+        redirect: String
+    }
 })
 export class SignIn extends Vue {
     
@@ -58,8 +61,9 @@ export class SignIn extends Vue {
                 rememberMe: this.rememberMe,
             }));
             bus.$emit('signin', response);
+            
+            redirect(this.$props.redirect || '/');
 
-            router.push({ path: '/' });
         } catch (e) {
             this.responseStatus = e.responseStatus || e;
         } finally {

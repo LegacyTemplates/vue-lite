@@ -12,9 +12,7 @@
     <i hidden>{{ '/js/hot-loader.js'     | ifDebugIncludeScript }}</i>
     <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
 
-    <div id="app">
-        {{page}}
-    </div>
+    {{page}}
 
     {{ [
         `/lib/vue/dist/vue${min}.js`,

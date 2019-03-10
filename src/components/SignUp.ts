@@ -1,6 +1,6 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { client, checkAuth, Register, splitOnFirst, toPascalCase } from '../shared'
-import { router } from '../shared/router';
+import { redirect } from '../shared/router';
 
 @Component({ template: 
     `<div>
@@ -62,8 +62,8 @@ export class SignUp extends Vue {
             }));
             
             await checkAuth();
-
-            router.push({ path: '/' });
+            redirect('/');
+            
         } catch (e) {
             this.responseStatus = e.responseStatus || e;
         } finally {

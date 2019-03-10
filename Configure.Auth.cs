@@ -6,7 +6,7 @@ using ServiceStack.Caching;
 using ServiceStack.Configuration;
 using ServiceStack.FluentValidation;
 
-namespace Validation
+namespace MyApp
 {
     // Run before AppHost.Configure()
     public class ConfigureAuth : IConfigureAppHost
@@ -56,5 +56,4 @@ namespace Validation
             });
         }
     }
-
 }

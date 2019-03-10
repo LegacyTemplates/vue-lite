@@ -18,7 +18,7 @@ import { bus, client, Hello } from '../shared'
             <div v-else>
                 <p class="pt-3">You're not authenticated, please Sign In:</p>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><router-link class="nav-link" to="/signin">Sign In</router-link></li>
+                    <li class="nav-item"><router-link class="nav-link" to="/login">Sign In</router-link></li>
                     <li class="nav-item"><router-link class="nav-link" to="/signup">Register new User</router-link></li>
                 </ul>
             </div>
