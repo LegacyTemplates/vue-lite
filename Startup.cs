@@ -61,6 +61,7 @@ namespace MyApp
             if (Config.DebugMode)
             {
                 Plugins.Add(new HotReloadFeature {
+                    DefaultPattern = "*.html;*.js;*.css",
                     VirtualFiles = VirtualFiles // Monitor ContentRoot to detect changes in /src
                 });
             }

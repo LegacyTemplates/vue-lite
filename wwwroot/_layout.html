@@ -9,7 +9,6 @@
     {{ ['/assets/css/'] | bundleCss({ minify:!debug, cache:!debug, disk:!debug, out:`/css/bundle${min}.css` }) }}
 </head>
 <body>
-    <i hidden>{{ '/js/hot-loader.js'     | ifDebugIncludeScript }}</i>
     <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
 
     {{page}}
