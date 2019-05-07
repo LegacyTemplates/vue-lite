@@ -11,19 +11,23 @@ import { redirect } from '../shared/router';
                 <ErrorSummary except="displayName,email,password,confirmPassword" :responseStatus="responseStatus" />
             </div>    
             <div class="form-group">
-                <Input name="displayName" v-model="displayName" placeholder="Display Name" :responseStatus="responseStatus" />
+                <Input id="displayName" v-model="displayName" placeholder="Display Name" :responseStatus="responseStatus" 
+                       label="Name" help="Your first and last name" />
             </div>
             <div class="form-group">
-                <Input name="email" v-model="email" placeholder="Email" :responseStatus="responseStatus" />
+                <Input id="email" v-model="email" placeholder="Email" :responseStatus="responseStatus" 
+                       label="Email" />
             </div>
             <div class="form-group">
-                <Input type="password" name="password" v-model="password" placeholder="Password" :responseStatus="responseStatus" />
+                <Input type="password" id="password" v-model="password" placeholder="Password" :responseStatus="responseStatus" 
+                       label="Password" />
             </div>
             <div class="form-group">
-                <Input type="password" name="confirmPassword" v-model="confirmPassword" placeholder="Password" :responseStatus="responseStatus" />
+                <Input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Password" :responseStatus="responseStatus" 
+                       label="Confirm Password" />
             </div>
             <div class="form-group">
-                <CheckBox name="autoLogin" v-model="autoLogin" :responseStatus="responseStatus">
+                <CheckBox id="autoLogin" v-model="autoLogin" :responseStatus="responseStatus">
                     Auto Login
                 </CheckBox>
             </div>

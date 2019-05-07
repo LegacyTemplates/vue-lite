@@ -11,13 +11,15 @@ import { redirect } from '../shared/router';
                 <ErrorSummary except="userName,password" :responseStatus="responseStatus" />
             </div>
             <div class="form-group">
-                <Input name="userName" v-model="userName" placeholder="Username" :responseStatus="responseStatus" />
+                <Input id="userName" v-model="userName" placeholder="Username" :responseStatus="responseStatus" 
+                       label="Email"  help="Email you signed up with" />
             </div>
             <div class="form-group">
-                <Input type="password" name="password" v-model="password" placeholder="Password" :responseStatus="responseStatus" />
+                <Input type="password" id="password" v-model="password" placeholder="Password" :responseStatus="responseStatus" 
+                       label="Password"  help="6 characters or more" />
             </div>
             <div class="form-group">
-                <CheckBox name="rememberMe" v-model="rememberMe" :responseStatus="responseStatus">
+                <CheckBox id="rememberMe" v-model="rememberMe" :responseStatus="responseStatus">
                     Remember Me
                 </CheckBox>
             </div>
