@@ -14,10 +14,11 @@
     '/lib/vue-class-component/vue-class-component.js',
     '/lib/vue-property-decorator/vue-property-decorator.umd.js',
     '/lib/@servicestack/client/servicestack-client.umd.js',
+    '/lib/@servicestack/vue/servicestack-vue.umd.js',
 ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/lib.bundle${min}.js` }) }}
 
 {{ [
     'content:/src/components/',
     'content:/src/shared/',
     'content:/src/',
-] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${min}.js` }) }}
+] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${min}.js`, iife:true }) }}

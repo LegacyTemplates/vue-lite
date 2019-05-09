@@ -38,7 +38,7 @@
         'content:/src/components/',
         'content:/src/shared/',
         'content:/src/',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${min}.js` }) }}
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${min}.js`, iife:true }) }}
 
     {{ scripts | raw }}
 
