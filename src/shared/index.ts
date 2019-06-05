@@ -1,10 +1,14 @@
-import { JsonServiceClient } from '@servicestack/client';
 import Vue from 'vue';
+import { JsonServiceClient, GetNavItemsResponse, UserAttributes, IAuthSession } from '@servicestack/client';
 
-export var client = new JsonServiceClient('/');
+declare let global: any; // populated from package.json/jest
+
+export const client = new JsonServiceClient('/');
 
 export {
-    errorResponse, errorResponseExcept, splitOnFirst, toPascalCase
+    errorResponse, errorResponseExcept,
+    splitOnFirst, toPascalCase,
+    queryString,
 } from '@servicestack/client';
 
 export {
@@ -19,34 +23,42 @@ import {
     Authenticate, AuthenticateResponse,
 } from './dtos';
 
+export enum Roles {
+  Admin = 'Admin',
+}
 
 // Shared state between all Components
-interface Store {
-    isAuthenticated: boolean;
-    userSession: AuthenticateResponse | null;
+interface State {
+  nav: GetNavItemsResponse;
+  userSession: IAuthSession | null;
+  userAttributes?: string[];
+  roles?: string[];
+  permissions?: string[];
 }
-export const store:Store = {
-    isAuthenticated: false,
-    userSession: null,
+export const store: State = {
+  nav: global.NAV_ITEMS as GetNavItemsResponse,
+  userSession: global.AUTH as AuthenticateResponse,
+  userAttributes: UserAttributes.fromSession(global.AUTH),
 };
 
 class EventBus extends Vue {
-    store = store
+    store = store;
 }
-export var bus = new EventBus({ data: store });
+export const bus = new EventBus({ data: store });
 
 bus.$on('signout', async () => {
-    
-    bus.$set(store, 'isAuthenticated', false);
     bus.$set(store, 'userSession', null);
+    bus.$set(store, 'userAttributes', null);
 
-    await client.post(new Authenticate({ provider: "logout" }));
-})
+    await client.post(new Authenticate({ provider: 'logout' }));
+});
+export const signout = () => bus.$emit('signout');
 
-bus.$on('signin', (userSession:AuthenticateResponse) => {
-    bus.$set(store, 'isAuthenticated', true);
+bus.$on('signin', (userSession: AuthenticateResponse) => {
+    const userAttributes = UserAttributes.fromSession(userSession);
     bus.$set(store, 'userSession', userSession);
-})
+    bus.$set(store, 'userAttributes', userAttributes);
+});
 
 export const checkAuth = async () => {
     try {
@@ -54,4 +66,4 @@ export const checkAuth = async () => {
     } catch (e) {
         bus.$emit('signout');
     }
-}
+};

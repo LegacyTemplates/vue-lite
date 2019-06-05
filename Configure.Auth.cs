@@ -8,7 +8,7 @@ using ServiceStack.FluentValidation;
 
 namespace MyApp
 {
-    // Run before AppHost.Configure()
+    [Priority(-100)] // Run before ConfigureAuthRepository
     public class ConfigureAuth : IConfigureAppHost
     {
         public void Configure(IAppHost appHost)
@@ -24,20 +24,7 @@ namespace MyApp
             //override the default registration validation with your own custom implementation
             appHost.RegisterAs<CustomRegistrationValidator, IValidator<Register>>();
 
-            appHost.Register<ICacheClient>(new MemoryCacheClient()); //Store User Sessions in Memory
-
-            appHost.Register<IAuthRepository>(new InMemoryAuthRepository()); //Store Authenticated Users in Memory
-
-            CreateUser(appHost, "admin@email.com", "Admin User", "p@55wOrd", roles:new[]{ RoleNames.Admin });
-        }
-
-        // Add initial Users to the configured Auth Repository
-        public void CreateUser(IAppHost appHost, string email, string name, string password, string[] roles)
-        {
-            var authRepo = appHost.TryResolve<IAuthRepository>();
-            var newAdmin = new UserAuth { Email = email, DisplayName = name };
-            var user = authRepo.CreateUserAuth(newAdmin, password);
-            authRepo.AssignRoles(user, roles);
+            //appHost.Register<ICacheClient>(new MemoryCacheClient()); //Store User Sessions in Memory Cache (default)
         }
     }
     

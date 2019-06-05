@@ -1,8 +1,8 @@
 /* Options:
-Date: 2019-03-06 23:46:31
-Version: 5.41
+Date: 2019-06-05 01:02:01
+Version: 5.51
 Tip: To override a DTO option, remove "//" prefix before updating
-BaseUrl: http://localhost:5000
+BaseUrl: https://localhost:5001
 
 //GlobalNamespace: 
 //AddServiceStackTypes: True
@@ -42,7 +42,6 @@ export interface IPost
 // @DataContract
 export class ResponseError
 {
-    public constructor(init?:Partial<ResponseError>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1, EmitDefaultValue=false)
     public errorCode: string;
 
@@ -53,13 +52,14 @@ export class ResponseError
     public message: string;
 
     // @DataMember(Order=4, EmitDefaultValue=false)
-    public meta: { [index:string]: string; };
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<ResponseError>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
 export class ResponseStatus
 {
-    public constructor(init?:Partial<ResponseStatus>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public errorCode: string;
 
@@ -73,19 +73,24 @@ export class ResponseStatus
     public errors: ResponseError[];
 
     // @DataMember(Order=5)
-    public meta: { [index:string]: string; };
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<ResponseStatus>) { (Object as any).assign(this, init); }
 }
 
 export class HelloResponse
 {
-    public constructor(init?:Partial<HelloResponse>) { (<any>Object).assign(this, init); }
     public result: string;
+
+    public constructor(init?: Partial<HelloResponse>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
 export class AuthenticateResponse implements IHasSessionId, IHasBearerToken
 {
-    public constructor(init?:Partial<AuthenticateResponse>) { (<any>Object).assign(this, init); }
+    // @DataMember(Order=11)
+    public responseStatus: ResponseStatus;
+
     // @DataMember(Order=1)
     public userId: string;
 
@@ -108,16 +113,23 @@ export class AuthenticateResponse implements IHasSessionId, IHasBearerToken
     public refreshToken: string;
 
     // @DataMember(Order=8)
-    public responseStatus: ResponseStatus;
+    public profileUrl: string;
 
     // @DataMember(Order=9)
-    public meta: { [index:string]: string; };
+    public roles: string[];
+
+    // @DataMember(Order=10)
+    public permissions: string[];
+
+    // @DataMember(Order=12)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<AuthenticateResponse>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
 export class AssignRolesResponse
 {
-    public constructor(init?:Partial<AssignRolesResponse>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public allRoles: string[];
 
@@ -125,13 +137,17 @@ export class AssignRolesResponse
     public allPermissions: string[];
 
     // @DataMember(Order=3)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=4)
     public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<AssignRolesResponse>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
 export class UnAssignRolesResponse
 {
-    public constructor(init?:Partial<UnAssignRolesResponse>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public allRoles: string[];
 
@@ -139,13 +155,17 @@ export class UnAssignRolesResponse
     public allPermissions: string[];
 
     // @DataMember(Order=3)
+    public meta: { [index: string]: string; };
+
+    // @DataMember(Order=4)
     public responseStatus: ResponseStatus;
+
+    public constructor(init?: Partial<UnAssignRolesResponse>) { (Object as any).assign(this, init); }
 }
 
 // @DataContract
 export class RegisterResponse
 {
-    public constructor(init?:Partial<RegisterResponse>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public userId: string;
 
@@ -168,15 +188,18 @@ export class RegisterResponse
     public responseStatus: ResponseStatus;
 
     // @DataMember(Order=8)
-    public meta: { [index:string]: string; };
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<RegisterResponse>) { (Object as any).assign(this, init); }
 }
 
 // @Route("/hello")
 // @Route("/hello/{Name}")
 export class Hello implements IReturn<HelloResponse>
 {
-    public constructor(init?:Partial<Hello>) { (<any>Object).assign(this, init); }
     public name: string;
+
+    public constructor(init?: Partial<Hello>) { (Object as any).assign(this, init); }
     public createResponse() { return new HelloResponse(); }
     public getTypeName() { return 'Hello'; }
 }
@@ -188,7 +211,6 @@ export class Hello implements IReturn<HelloResponse>
 // @DataContract
 export class Authenticate implements IReturn<AuthenticateResponse>, IPost
 {
-    public constructor(init?:Partial<Authenticate>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public provider: string;
 
@@ -244,7 +266,9 @@ export class Authenticate implements IReturn<AuthenticateResponse>, IPost
     public accessTokenSecret: string;
 
     // @DataMember(Order=19)
-    public meta: { [index:string]: string; };
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<Authenticate>) { (Object as any).assign(this, init); }
     public createResponse() { return new AuthenticateResponse(); }
     public getTypeName() { return 'Authenticate'; }
 }
@@ -253,7 +277,6 @@ export class Authenticate implements IReturn<AuthenticateResponse>, IPost
 // @DataContract
 export class AssignRoles implements IReturn<AssignRolesResponse>, IPost
 {
-    public constructor(init?:Partial<AssignRoles>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public userName: string;
 
@@ -262,6 +285,11 @@ export class AssignRoles implements IReturn<AssignRolesResponse>, IPost
 
     // @DataMember(Order=3)
     public roles: string[];
+
+    // @DataMember(Order=4)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<AssignRoles>) { (Object as any).assign(this, init); }
     public createResponse() { return new AssignRolesResponse(); }
     public getTypeName() { return 'AssignRoles'; }
 }
@@ -270,7 +298,6 @@ export class AssignRoles implements IReturn<AssignRolesResponse>, IPost
 // @DataContract
 export class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
 {
-    public constructor(init?:Partial<UnAssignRoles>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public userName: string;
 
@@ -279,6 +306,11 @@ export class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
 
     // @DataMember(Order=3)
     public roles: string[];
+
+    // @DataMember(Order=4)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<UnAssignRoles>) { (Object as any).assign(this, init); }
     public createResponse() { return new UnAssignRolesResponse(); }
     public getTypeName() { return 'UnAssignRoles'; }
 }
@@ -287,7 +319,6 @@ export class UnAssignRoles implements IReturn<UnAssignRolesResponse>, IPost
 // @DataContract
 export class Register implements IReturn<RegisterResponse>, IPost
 {
-    public constructor(init?:Partial<Register>) { (<any>Object).assign(this, init); }
     // @DataMember(Order=1)
     public userName: string;
 
@@ -317,6 +348,11 @@ export class Register implements IReturn<RegisterResponse>, IPost
 
     // @DataMember(Order=10)
     public errorView: string;
+
+    // @DataMember(Order=11)
+    public meta: { [index: string]: string; };
+
+    public constructor(init?: Partial<Register>) { (Object as any).assign(this, init); }
     public createResponse() { return new RegisterResponse(); }
     public getTypeName() { return 'Register'; }
 }

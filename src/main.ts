@@ -1,11 +1,17 @@
+import './app.scss';
+import 'es6-shim';
+
 import Vue from 'vue';
-import { checkAuth, store } from './shared';
+
+import Controls from '@servicestack/vue';
+Vue.use(Controls);
+
+import { App } from './App';
+
 import { router } from './shared/router';
 
 const app = new Vue({
     el: '#app',
-    router,
-    data: store
-} as any);
-
-checkAuth();
+    render: (h) => h(App),
+    router
+});

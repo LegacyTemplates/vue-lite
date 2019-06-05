@@ -9,7 +9,16 @@
     {{ ['/assets/css/'] | bundleCss({ minify:!debug, cache:!debug, disk:!debug, out:`/css/bundle${min}.css` }) }}
 </head>
 <body>
+    {{ 'buttons,svg-auth' | cssIncludes }}
+    {{ 'svg-icons'        | cssIncludes | svgFill('#41B883') }}
+
     <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
+    <script>NAV_ITEMS = {{ 'GetNavItems' | execService | json }}</script>
+    <script>AUTH = {{ 'Authenticate' | execService({ ifErrorReturn: "null" }) | json }}</script>
+
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
 
     {{page}}
 
@@ -26,8 +35,10 @@
         var ALIASES = {
             'vue': { default: Vue },
             'vue-router': { default: VueRouter },
-            'vue-class-component': VueClassComponent
+            'vue-class-component': VueClassComponent,
+            '@servicestack/vue': ServiceStackVue
         };
+        var global = window;
         window.exports = {};
         window.require = function(name) {
             return ALIASES[name] || exports[name] || window[name] || exports;

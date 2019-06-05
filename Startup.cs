@@ -6,21 +6,24 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Funq;
 using ServiceStack;
-using ServiceStack.Text;
 using ServiceStack.Configuration;
-using ServiceStack.Validation;
 using MyApp.ServiceInterface;
+using ServiceStack.Script;
+using ServiceStack.Web;
+using System;
+using ServiceStack.Text;
+using ServiceStack.Logging;
 
 namespace MyApp
 {
-    public class Startup
+    public class Startup : ModularStartup
     {
-        public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+        public Startup(IConfiguration configuration) 
+            : base(configuration, typeof(MyServices).Assembly) {}
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public new void ConfigureServices(IServiceCollection services)
         {
         }
 
@@ -46,25 +49,13 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
+            Plugins.Add(new SharpPagesFeature()); // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
+
             SetConfig(new HostConfig
             {
-                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false),
                 AddRedirectParamsToQueryString = true,
-                UseSameSiteCookies = true,
+                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
             });
-            
-            // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
-            Plugins.Add(new SharpPagesFeature()); 
-
-            Plugins.Add(new ValidationFeature());
-
-            if (Config.DebugMode)
-            {
-                Plugins.Add(new HotReloadFeature {
-                    DefaultPattern = "*.html;*.js;*.css",
-                    VirtualFiles = VirtualFiles // Monitor ContentRoot to detect changes in /src
-                });
-            }
         }
     }
 }

@@ -1,58 +1,65 @@
-import { Vue, Component } from 'vue-property-decorator'
-import { client, checkAuth, Register, splitOnFirst, toPascalCase } from '../shared'
-import { redirect } from '../shared/router';
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator';
+import { store, bus, client, checkAuth, toPascalCase, splitOnFirst } from '../shared';
+import { Register } from '../shared/dtos';
+import { Routes, redirect } from '../shared/router';
 
 @Component({ template: 
-    `<div>
+    `<div class="row">
+        <div class="col-4">
         <h3>Register New User</h3>
 
-        <form ref="form" @submit.prevent="submit" :class="{ error:responseStatus, loading }" >
+        <form @submit.prevent="submit" :class="{ error:responseStatus, loading }" >
             <div class="form-group">
-                <ErrorSummary except="displayName,email,password,confirmPassword" :responseStatus="responseStatus" />
-            </div>    
-            <div class="form-group">
-                <Input id="displayName" v-model="displayName" placeholder="Display Name" :responseStatus="responseStatus" 
-                       label="Name" help="Your first and last name" />
+                <error-summary except="displayName,email,password,confirmPassword" :responseStatus="responseStatus" />
             </div>
             <div class="form-group">
-                <Input id="email" v-model="email" placeholder="Email" :responseStatus="responseStatus" 
-                       label="Email" />
+                <v-input id="displayName" v-model="displayName" :responseStatus="responseStatus"
+                        placeholder="Display Name" label="Name" help="Your first and last name" />
             </div>
             <div class="form-group">
-                <Input type="password" id="password" v-model="password" placeholder="Password" :responseStatus="responseStatus" 
-                       label="Password" />
+                <v-input id="email" v-model="email" :responseStatus="responseStatus"
+                        placeholder="Email" label="Email" />
             </div>
             <div class="form-group">
-                <Input type="password" id="confirmPassword" v-model="confirmPassword" placeholder="Password" :responseStatus="responseStatus" 
-                       label="Confirm Password" />
+                <v-input type="password" id="password" v-model="password" :responseStatus="responseStatus"
+                        placeholder="Password" label="Password" />
             </div>
             <div class="form-group">
-                <CheckBox id="autoLogin" v-model="autoLogin" :responseStatus="responseStatus">
-                    Auto Login
-                </CheckBox>
+                <v-input type="password" id="confirmPassword" v-model="confirmPassword" :responseStatus="responseStatus"
+                        placeholder="Confirm" label="Confirm Password" />
             </div>
             <div class="form-group">
-                <button class="btn btn-lg btn-primary" type="submit">Register</button>
+                <v-checkbox id="autoLogin" v-model="autoLogin" :responseStatus="responseStatus">
+                Auto Login
+                </v-checkbox>
             </div>
+            <div class="form-group">
+                <v-button type="submit" lg primary>Register</v-button>
+                <v-link-button href="/signin" navItemClass="btn">Sign In</v-link-button>
+            </div>
+
             <div class="pt-3">
-                <b>Quick Populate:</b>
+                <h5>Quick Populate:</h5>
                 <p class="pt-1">
-                    <a class="btn btn-outline-info btn-sm" href="javascript:void(0)" @click.prevent="newUser('new@user.com')">new@user.com</a>
+                    <v-link-button outline-info sm @click="newUser('new@user.com')">new@user.com</v-link-button>
                 </p>
             </div>
         </form>
+        </div>
     </div>`
 })
 export class SignUp extends Vue {
-    displayName = ''
-    email = ''
-    password = ''
-    confirmPassword = ''
-    autoLogin = true
-    loading = false
-    responseStatus = null
 
-    async submit() {        
+    displayName = '';
+    email = '';
+    userName = '';
+    password = '';
+    confirmPassword = '';
+    autoLogin = true;
+    loading = false;
+    responseStatus = null;
+
+    async submit() {
         try {
             this.loading = true;
             this.responseStatus = null;
@@ -64,10 +71,11 @@ export class SignUp extends Vue {
                 confirmPassword: this.confirmPassword,
                 autoLogin: this.autoLogin,
             }));
-            
+
             await checkAuth();
-            redirect('/');
-            
+
+            redirect(Routes.Home);
+
         } catch (e) {
             this.responseStatus = e.responseStatus || e;
         } finally {
@@ -75,10 +83,12 @@ export class SignUp extends Vue {
         }
     }
 
-    newUser(email:string) {
+    newUser(email: string) {
         const names = email.split('@');
-        this.displayName = toPascalCase(names[0]) + " " + toPascalCase(splitOnFirst(names[1],'.')[0]);
+        this.displayName = toPascalCase(names[0]) + ' ' + toPascalCase(splitOnFirst(names[1], '.')[0]);
         this.email = email;
         this.password = this.confirmPassword = 'p@55wOrd';
     }
+
 }
+export default SignUp;

@@ -1,10 +1,12 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({ template: 
     `<div id="about">
-        <h3>{{ message }}</h3>
+        <div class="svg-users svg-8x ml-2"/>
+        <h3>{{message}}</h3>
     </div>`
 })
 export class About extends Vue {
-    message = 'About page'
+    @Prop({ default: null }) message: string;
 }
+export default About;
