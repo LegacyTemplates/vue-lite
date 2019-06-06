@@ -5,7 +5,7 @@ using ServiceStack.Configuration;
 
 namespace MyApp
 {
-    [Priority(-90)] // Run before AppHost.Configure()
+    [Priority(-80)] // Run before AppHost.Configure()
     public class ConfigureAuthRepository : IConfigureAppHost
     {
         public void Configure(IAppHost appHost)

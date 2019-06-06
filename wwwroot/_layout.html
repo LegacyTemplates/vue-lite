@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ (debug ? '' : '.min') | assignTo: min }}
-    {{ ['/assets/css/'] | bundleCss({ minify:!debug, cache:!debug, disk:!debug, out:`/css/bundle${min}.css` }) }}
+    {{ (debug ? '' : '[hash].min') | assignTo: min }}
+    {{ ['!/assets/css/default.css','/assets/css/'] | bundleCss({ disk:!debug, out:`/css/lib.bundle${min}.css` }) }}
 </head>
 <body>
-    {{ 'buttons,svg-auth' | cssIncludes }}
-    {{ 'svg-icons'        | cssIncludes | svgFill('#41B883') }}
+    {{ 'buttons,svg-auth,/assets/css/default.css' | cssIncludes }}
+    {{ 'svg-icons' | cssIncludes | svgFill('#41B883') }}
 
     <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
     <script>NAV_ITEMS = {{ 'GetNavItems' | execService | json }}</script>
@@ -29,7 +29,7 @@
         '/lib/vue-property-decorator/vue-property-decorator.umd.js',
         '/lib/@servicestack/client/servicestack-client.umd.js',
         '/lib/@servicestack/vue/servicestack-vue.umd.js',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/lib.bundle${min}.js` }) }}
+    ] | bundleJs({ disk:!debug, out:`/js/lib.bundle${min}.js` }) }}
 
     <script>
         var ALIASES = {
