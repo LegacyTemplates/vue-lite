@@ -57,6 +57,8 @@ namespace MyApp
                 AddRedirectParamsToQueryString = true,
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
             });
+
+            Svg.Load(RootDirectory.GetDirectory("/assets/svg"));
         }
     }
 }
