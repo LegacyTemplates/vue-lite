@@ -65,7 +65,7 @@ export class SignIn extends Vue {
         }
     }
 
-    async submit() {
+    protected async submit() {
         try {
             this.loading = true;
             this.responseStatus = null;
@@ -87,7 +87,7 @@ export class SignIn extends Vue {
         }
     }
 
-    switchUser(email: string) {
+    protected switchUser(email: string) {
         this.userName = email;
         this.password = 'p@55wOrd';
     }
