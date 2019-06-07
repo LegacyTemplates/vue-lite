@@ -59,6 +59,12 @@ export class SignIn extends Vue {
 
     get store() { return store; }
 
+    protected mounted() {
+        if (this.store.userSession != null) {
+            redirect(this.$route.query.redirect as string || Routes.Home);
+        }
+    }
+
     async submit() {
         try {
             this.loading = true;
