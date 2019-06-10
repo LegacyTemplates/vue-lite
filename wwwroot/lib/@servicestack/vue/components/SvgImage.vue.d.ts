@@ -4,7 +4,6 @@ export declare class SvgImage extends Vue {
     fill: string;
     width: number;
     height: number;
-    style: any;
     baseUrl: string;
     protected readonly src: string;
     protected readonly styles: any;

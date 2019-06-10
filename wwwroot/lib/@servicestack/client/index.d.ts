@@ -46,6 +46,8 @@ export declare class NavItem {
 }
 export declare class GetNavItems {
     constructor(init?: Partial<GetNavItems>);
+    createResponse(): GetNavItemsResponse;
+    getTypeName(): string;
 }
 export declare class GetNavItemsResponse {
     baseUrl: string;
@@ -295,6 +297,7 @@ export declare class JsonServiceClient {
     bearerToken: string;
     refreshToken: string;
     refreshTokenUri: string;
+    useTokenCookie: boolean;
     requestFilter: (req: IRequestInit) => void;
     responseFilter: (res: Response) => void;
     exceptionFilter: (res: Response, error: any) => void;
@@ -323,6 +326,7 @@ export declare class JsonServiceClient {
     sendAllOneWay<T>(requests: IReturn<T>[]): Promise<void>;
     createUrlFromDto<T>(method: string, request: IReturn<T>): string;
     toAbsoluteUrl(relativeOrAbsoluteUrl: string): string;
+    deleteCookie(name: string): void;
     private createRequest({method, request, url, args, body});
     private createResponse<T>(res, request);
     private handleError(holdRes, res, type?);
@@ -331,6 +335,7 @@ export declare class JsonServiceClient {
     sendRequest<T>(info: ISendRequest): Promise<T>;
     raiseError(res: Response, error: any): any;
 }
+export declare const isFormData: (body: any) => boolean;
 export declare const toCamelCase: (s: string) => string;
 export declare const toPascalCase: (s: string) => string;
 export declare const sanitize: (status: any) => any;
@@ -465,3 +470,4 @@ export declare class NavOptions {
     childNavMenuItemClass?: string;
     constructor(init?: Partial<NavOptions>);
 }
+export declare function classNames(...args: any[]): string;

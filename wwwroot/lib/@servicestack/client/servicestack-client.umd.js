@@ -51,6 +51,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
         function GetNavItems(init) {
             Object.assign(this, init);
         }
+        GetNavItems.prototype.createResponse = function () { return new GetNavItemsResponse(); };
+        GetNavItems.prototype.getTypeName = function () { return 'GetNavItems'; };
         return GetNavItems;
     }());
     exports.GetNavItems = GetNavItems;
@@ -566,7 +568,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }());
     exports.HttpMethods = HttpMethods;
     var GetAccessToken = /** @class */ (function () {
-        function GetAccessToken() {
+        function GetAccessToken(init) {
+            Object.assign(this, init);
         }
         GetAccessToken.prototype.createResponse = function () { return new GetAccessTokenResponse(); };
         GetAccessToken.prototype.getTypeName = function () { return "GetAccessToken"; };
@@ -662,6 +665,16 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
                 ? relativeOrAbsoluteUrl
                 : exports.combinePaths(this.baseUrl, relativeOrAbsoluteUrl);
         };
+        JsonServiceClient.prototype.deleteCookie = function (name) {
+            if (this.manageCookies) {
+                delete this.cookies[name];
+            }
+            else {
+                if (document) {
+                    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/';
+                }
+            }
+        };
         JsonServiceClient.prototype.createRequest = function (_a) {
             var _this = this;
             var method = _a.method, request = _a.request, url = _a.url, args = _a.args, body = _a.body;
@@ -701,7 +714,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
             };
             if (hasRequestBody) {
                 reqInit.body = body || JSON.stringify(request);
-                if (typeof window != "undefined" && body instanceof FormData) {
+                if (exports.isFormData(body)) {
                     headers.delete('Content-Type'); //set by FormData
                 }
             }
@@ -793,7 +806,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
                 request: body,
                 body: typeof body == "string"
                     ? body
-                    : typeof window != "undefined" && body instanceof FormData
+                    : exports.isFormData(body)
                         ? body
                         : JSON.stringify(body),
                 url: exports.appendQueryString(url, request),
@@ -825,21 +838,35 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
                 .catch(function (res) {
                 if (res.status === 401) {
                     if (_this.refreshToken) {
-                        var jwtReq_1 = new GetAccessToken();
-                        jwtReq_1.refreshToken = _this.refreshToken;
+                        var jwtReq_1 = new GetAccessToken({ refreshToken: _this.refreshToken, useTokenCookie: _this.useTokenCookie });
                         var url = _this.refreshTokenUri || _this.createUrlFromDto(HttpMethods.Post, jwtReq_1);
+                        if (_this.useTokenCookie) {
+                            _this.bearerToken = null;
+                            _this.headers.delete("Authorization");
+                        }
                         var jwtRequest = _this.createRequest({ method: HttpMethods.Post, request: jwtReq_1, args: null, url: url });
                         return fetch(url, jwtRequest)
                             .then(function (r) { return _this.createResponse(r, jwtReq_1).then(function (jwtResponse) {
-                            _this.bearerToken = jwtResponse.accessToken;
+                            _this.bearerToken = jwtResponse.accessToken || null;
                             return resendRequest();
                         }); })
                             .catch(function (res) {
-                            return _this.handleError(holdRes, res, "RefreshTokenException");
+                            if (_this.onAuthenticationRequired) {
+                                return _this.onAuthenticationRequired()
+                                    .then(resendRequest)
+                                    .catch(function (resHandler) {
+                                    return _this.handleError(holdRes, resHandler, "RefreshTokenException");
+                                });
+                            }
+                            else {
+                                return _this.handleError(holdRes, res, "RefreshTokenException");
+                            }
                         });
                     }
-                    if (_this.onAuthenticationRequired) {
-                        return _this.onAuthenticationRequired().then(resendRequest);
+                    else {
+                        if (_this.onAuthenticationRequired) {
+                            return _this.onAuthenticationRequired().then(resendRequest);
+                        }
                     }
                 }
                 return _this.handleError(holdRes, res);
@@ -854,6 +881,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
         return JsonServiceClient;
     }());
     exports.JsonServiceClient = JsonServiceClient;
+    exports.isFormData = function (body) { return typeof window != "undefined" && body instanceof FormData; };
     var createErrorResponse = function (errorCode, message, type) {
         if (type === void 0) { type = null; }
         var error = new ErrorResponse();
@@ -1948,4 +1976,36 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
         return NavOptions;
     }());
     exports.NavOptions = NavOptions;
+    function classNames() {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        var classes = [];
+        for (var i = 0; i < args.length; i++) {
+            var arg = args[i];
+            if (!arg)
+                continue;
+            var argType = typeof arg;
+            if (argType === 'string' || argType === 'number') {
+                classes.push(arg);
+            }
+            else if (Array.isArray(arg) && arg.length) {
+                var inner = classNames.apply(null, arg);
+                if (inner) {
+                    classes.push(inner);
+                }
+            }
+            else if (argType === 'object') {
+                for (var _a = 0, _b = Object.keys(arg); _a < _b.length; _a++) {
+                    var key = _b[_a];
+                    if (arg[key]) {
+                        classes.push(key);
+                    }
+                }
+            }
+        }
+        return classes.join(' ');
+    }
+    exports.classNames = classNames;
 });

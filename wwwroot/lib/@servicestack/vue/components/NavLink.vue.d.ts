@@ -25,5 +25,6 @@ export declare class NavLink extends Vue {
     };
     protected readonly id: string | null;
     protected readonly activeCls: string;
+    protected activeClassNav(x: NavItem, activePath: string): string;
 }
 export default NavLink;

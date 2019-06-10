@@ -10,7 +10,7 @@ import { bus, store } from './shared';
                     <i class="svg-logo svg-2x mr-1" />
                     <span class="align-middle">MyApp</span>
                 </router-link>
-                <v-navbar :items="store.nav.results" :attributes="store.userAttributes" />
+                <navbar :items="store.nav.results" :attributes="store.userAttributes" />
             </div>
         </nav>
 
