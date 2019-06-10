@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ (debug ? '' : '[hash].min') | assignTo: min }}
-    {{ ['!/assets/css/default.css','/assets/css/'] | bundleCss({ disk:!debug, out:`/css/lib.bundle${min}.css` }) }}
+    {{ (debug ? '' : '.min') | assignTo: min }}
+    {{ (debug ? '' : '[hash].min') | assignTo: dist }}
+    {{ ['!/assets/css/default.css','/assets/css/'] 
+       | bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` }) }}
 </head>
 <body>
     {{ 'buttons,svg-auth,app,/assets/css/default.css' | cssIncludes }}
@@ -37,7 +39,7 @@
         '/lib/vue-property-decorator/vue-property-decorator.umd.js',
         '/lib/@servicestack/client/servicestack-client.umd.js',
         '/lib/@servicestack/vue/servicestack-vue.umd.js',
-    ] | bundleJs({ disk:!debug, out:`/js/lib.bundle${min}.js` }) }}
+    ] | bundleJs({ disk:!debug, out:`/js/lib.bundle${dist}.js` }) }}
 
     <script>
         var ALIASES = {
@@ -57,7 +59,7 @@
         'content:/src/components/',
         'content:/src/shared/',
         'content:/src/',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${min}.js`, iife:true }) }}
+    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
 
     {{ scripts | raw }}
 

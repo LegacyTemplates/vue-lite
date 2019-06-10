@@ -55,7 +55,7 @@ namespace MyApp
             {
                 UseSameSiteCookies = true,
                 AddRedirectParamsToQueryString = true,
-                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
+                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false),
             });
 
             Svg.Load(RootDirectory.GetDirectory("/assets/svg"));
