@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ (debug ? '' : '.min') | assignTo: min }}
-    {{ (debug ? '' : '[hash].min') | assignTo: dist }}
+    {{ (debug ? '' : '.min') | to => min }}
+    {{ (debug ? '' : '[hash].min') | to => dist }}
     {{ ['!/assets/css/default.css','/assets/css/'] 
        | bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` }) }}
 </head>

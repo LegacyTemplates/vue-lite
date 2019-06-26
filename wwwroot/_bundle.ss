@@ -1,8 +1,8 @@
 {{* run in host project directory with `web run wwwroot/_bundle.ss` *}}
 
-{{ false | assignTo: debug }}
-{{ (debug ? '' : '.min') | assignTo: min }}
-{{ (debug ? '' : '[hash].min') | assignTo: dist }}
+{{ false | to => debug }}
+{{ (debug ? '' : '.min') | to => min }}
+{{ (debug ? '' : '[hash].min') | to => dist }}
 
 {{ [`/css/bundle${min}.css`,`/js/lib.bundle${min}.js`,`/js/bundle${min}.js`] 
    | map => it.replace('[hash]','.*').filesFind()
