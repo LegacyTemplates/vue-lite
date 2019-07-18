@@ -16,6 +16,5 @@ export declare class NavLinkButton extends BootstrapBase {
     protected readonly hashPrefix: string;
     protected readonly activeCls: string;
     protected readonly btnCls: any[];
-    protected readonly iconCls: string | null;
 }
 export default NavLinkButton;
