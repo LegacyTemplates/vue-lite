@@ -10,7 +10,7 @@ false | to => debug
    | flatten
    | map => it.VirtualPath.fileDelete() | end }}
 
-* Copy same bundle defintions from _layout.html as-is *
+* Copy same bundle definitions from _layout.html as-is *
 
 ['!/assets/css/default.css','/assets/css/'] | bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` })
 
