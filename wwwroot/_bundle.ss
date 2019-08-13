@@ -13,7 +13,6 @@ false | to => debug
 * Copy same bundle defintions from _layout.html as-is *
 
 ['!/assets/css/default.css','/assets/css/'] | bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` })
-```
 
 {{ [
     `/lib/vue/dist/vue${min}.js`,
@@ -29,3 +28,5 @@ false | to => debug
     'content:/src/shared/',
     'content:/src/',
 ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
+
+```
