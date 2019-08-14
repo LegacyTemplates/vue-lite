@@ -7,7 +7,7 @@ false | to => debug
 
 {{ [`/css/lib.bundle${dist}.css`,`/js/lib.bundle${dist}.js`,`/js/bundle${dist}.js`] 
    | map => it.replace('[hash]','.*').findFiles()
-   | flatten
+   | flat
    | do => it.VirtualPath.deleteFile() }}
 
 * Copy same bundle definitions from _layout.html as-is *
