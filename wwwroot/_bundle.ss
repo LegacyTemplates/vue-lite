@@ -5,10 +5,10 @@ false | to => debug
 (debug ? '' : '.min')       | to => min
 (debug ? '' : '[hash].min') | to => dist
 
-{{ [`/css/bundle${min}.css`,`/js/lib.bundle${min}.js`,`/js/bundle${min}.js`] 
-   | map => it.replace('[hash]','.*').filesFind()
+{{ [`/css/lib.bundle${dist}.css`,`/js/lib.bundle${dist}.js`,`/js/bundle${dist}.js`] 
+   | map => it.replace('[hash]','.*').findFiles()
    | flatten
-   | map => it.VirtualPath.fileDelete() | end }}
+   | do => it.VirtualPath.deleteFile() }}
 
 * Copy same bundle definitions from _layout.html as-is *
 
@@ -28,5 +28,4 @@ false | to => debug
     'content:/src/shared/',
     'content:/src/',
 ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
-
 ```
