@@ -1,6 +1,6 @@
 # vue-lite
 
-.NET Core 2.1 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
+.NET Core 3.1 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
 
