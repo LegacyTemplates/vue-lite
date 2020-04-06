@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ (debug ? '' : '.min') | to => min }}
-    {{ (debug ? '' : '[hash].min') | to => dist }}
+    {{ var min = (debug ? '' : '.min') }}
+    {{ var dist = (debug ? '' : '[hash].min') }}
     {{ ['!/assets/css/default.css','/assets/css/'] 
-       | bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` }) }}
+       |> bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` }) }}
 </head>
 <body>
-    {{ 'buttons,svg-auth,app,/assets/css/default.css' | cssIncludes }}
-    {{ 'svg-icons' | cssIncludes | svgFill('#41B883') }}
+    {{ 'buttons,svg-auth,app,/assets/css/default.css' |> cssIncludes }}
+    {{ 'svg-icons' |> cssIncludes |> svgFill('#41B883') }}
 
-    <i hidden>{{ '/js/hot-fileloader.js' | ifDebugIncludeScript }}</i>
-    <script>NAV_ITEMS = {{ 'GetNavItems' | execService | json }}</script>
-    <script>AUTH = {{ 'Authenticate' | execService({ ifErrorReturn: "null" }) | json }}</script>
+    <i hidden>{{ '/js/hot-fileloader.js' |> ifDebugIncludeScript }}</i>
+    <script>NAV_ITEMS = {{ 'GetNavItems' |> execService |> json }}</script>
+    <script>AUTH = {{ 'Authenticate' |> execService({ ifErrorReturn: "null" }) |> json }}</script>
 
     <noscript>
       You need to enable JavaScript to run this app.
@@ -29,7 +29,7 @@
         <img style="height:42px" src="{{ 'servicestack'.svgDataUri('#333') }}" />
         <a href="https://github.com/NetCoreTemplates/vue-lite">Learn about this Vue template</a>
         </h4>
-        <div>Copyright &copy; {{ now | dateFormat('yyyy') }}</div>
+        <div>Copyright &copy; {{ now |> dateFormat('yyyy') }}</div>
     </div>
 
     {{ [
@@ -39,7 +39,7 @@
         '/lib/vue-property-decorator/vue-property-decorator.umd.js',
         '/lib/@servicestack/client/servicestack-client.umd.js',
         '/lib/@servicestack/vue/servicestack-vue.umd.js',
-    ] | bundleJs({ disk:!debug, out:`/js/lib.bundle${dist}.js` }) }}
+    ] |> bundleJs({ disk:!debug, out:`/js/lib.bundle${dist}.js` }) }}
 
     <script>
         var ALIASES = {
@@ -59,9 +59,9 @@
         'content:/src/components/',
         'content:/src/shared/',
         'content:/src/',
-    ] | bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
+    ] |> bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
 
-    {{ scripts | raw }}
+    {{ scripts |> raw }}
 
 </body>
 </html>

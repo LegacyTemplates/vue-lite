@@ -47,14 +47,21 @@ namespace MyApp
         // Configure your AppHost with the necessary configuration and dependencies your App needs
         public override void Configure(Container container)
         {
-            Plugins.Add(new SharpPagesFeature()); // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
-
             SetConfig(new HostConfig
             {
                 UseSameSiteCookies = true,
                 AddRedirectParamsToQueryString = true,
-                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), false),
+                DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
             });
+
+            if (Config.DebugMode)
+            {
+                Plugins.Add(new HotReloadFeature {
+                    VirtualFiles = VirtualFiles, // monitor all folders for changes inc. /src & /wwwroot
+                });
+            }
+            
+            Plugins.Add(new SharpPagesFeature()); // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
         }
     }
 }
