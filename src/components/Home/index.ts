@@ -8,7 +8,7 @@ import { store, signout } from '../../shared';
             <i class="svg-home svg-9x"></i>
         </div>
         <div class="col col-4 mt-4">
-            <HelloApi :name="name" />
+            <hello-api :name="name" />
         </div>
         <div class="col-md-auto"></div>
         <div class="col col-4">
@@ -23,9 +23,6 @@ import { store, signout } from '../../shared';
             </div>
         </div>
     </div>`,
-    components: {
-        HelloApi,
-      },
 })
 export class Home extends Vue {
     @Prop({ default: '' }) name: string;

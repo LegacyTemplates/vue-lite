@@ -35,3 +35,4 @@ export class HelloApi extends Vue {
     }
 }
 export default HelloApi;
+Vue.component('hello-api', HelloApi);
