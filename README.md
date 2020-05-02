@@ -6,7 +6,7 @@
 
 > Browse [source code](https://github.com/NetCoreTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-lite.web-templates.io)
 
-Install with `web` .NET Core tool:
+Install with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
 
     $ dotnet tool install -g x
 
