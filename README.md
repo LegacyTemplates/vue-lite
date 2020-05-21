@@ -42,13 +42,21 @@ After changing your ServiceStack Services, you can re-generate their [Typed Type
 
 #### Bundling
 
-The integrated `.js` and `.css` bundling is configured to use an fast unminified in-memory bundle for optimal development experience whilst
-it utilizes a cached in-memory minified bundle created on first request in production releases. 
+The integrated `.js` and `.css` bundling is configured to use a fast unminified in-memory bundle for an optimal development experience whilst
+it utilizes a an advanced minified bundle in production releases. 
 
-Optionally the same bundling configuration can be used in [_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/wwwroot/_bundle.ss)
-to generate and save a more advanced optimized bundle using NUglify with:
+When publishing, the project's **Bundle** task:
 
-    $ x run wwwroot\_bundle.ss
+```xml
+<Target Name="Bundle" BeforeTargets="AfterPublish">
+    <Exec Command="x run _bundle.ss -to /bin/Release/netcoreapp3.1/publish/wwwroot" />
+</Target>    
+```
+
+Runs [_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/_bundle.ss) to produce an optimized, minified & hashed bundle using 
+ServiceStack's [built-in bundling](https://docs.servicestack.net/html-css-and-javascript-minification#optimal-library-bundles) 
+embedded in the [dotnet tools](https://docs.servicestack.net/dotnet-tool) which is pre-configured to use [NUglify's](https://github.com/xoofx/NUglify) 
+advanced compression.
 
 ### Publishing and Deployment
 
