@@ -42,7 +42,6 @@
     `/lib/js/vue-router/vue-router.min.js`,
     `/lib/js/vue-class-component/vue-class-component.min.js`,
     `/lib/js/vue-property-decorator/vue-property-decorator.min.js`,
-    `/lib/js/@servicestack/desktop/servicestack-desktop.min.js`,
     `/lib/js/@servicestack/client/servicestack-client.min.js`,
     `/lib/js/@servicestack/vue/servicestack-vue.min.js`,
 ] |> map => `<script src="${it}"></script>` |> joinln |> raw }}
@@ -77,6 +76,7 @@ Object.assign(window, window["@servicestack/desktop"], window["@servicestack/cli
 {{/if}}
 
 {{ scripts |> raw }}
+{{htmlError}}
 
 </body>
 </html>
