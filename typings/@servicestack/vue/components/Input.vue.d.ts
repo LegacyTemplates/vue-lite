@@ -3,7 +3,7 @@ export declare class Input extends Vue {
     responseStatus: object;
     type: string;
     id: string;
-    placeholder: string;
+    statusField: string;
     label: string;
     help: string;
     inputClass: string;

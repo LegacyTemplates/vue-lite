@@ -51,17 +51,21 @@ namespace MyApp
             {
                 UseSameSiteCookies = true,
                 AddRedirectParamsToQueryString = true,
+                EmbeddedResourceBaseTypes = { typeof(ServiceStack.Desktop.DesktopAssets) },
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
             });
 
             if (Config.DebugMode)
             {
                 Plugins.Add(new HotReloadFeature {
-                    VirtualFiles = VirtualFiles, // monitor all folders for changes inc. /src & /wwwroot
+                    VirtualFiles = VirtualFiles, //Monitor all folders for changes including /src & /wwwroot
                 });
             }
             
-            Plugins.Add(new SharpPagesFeature()); // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
+            // enable server-side rendering, see: https://sharpscript.net/docs/sharp-pages
+            Plugins.Add(new SharpPagesFeature {
+                EnableSpaFallback = true,
+            }); 
         }
     }
 }

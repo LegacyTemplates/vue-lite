@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="/favicon.ico" rel="icon">
+    <link rel="stylesheet" href="/lib/css/bootstrap/bootstrap.css">
     <title>{{ title ?? 'MyApp' }}</title>
-    {{ var min = (debug ? '' : '.min') }}
-    {{ var dist = (debug ? '' : '[hash].min') }}
-    {{ ['!/assets/css/default.css','/assets/css/'] 
-       |> bundleCss({ disk:!debug, out:`/css/lib.bundle${dist}.css` }) }}
 </head>
 <body>
-    {{ 'buttons,svg-auth,app,/assets/css/default.css' |> cssIncludes }}
-    {{ 'svg-icons' |> cssIncludes |> svgFill('#41B883') }}
+{{ 'buttons,svg-auth,app,/assets/css/default.css' |> cssIncludes }}
+{{ 'svg-icons' |> cssIncludes |> svgFill('#41B883') }}
+
+{{var cssBundle = '/'.findFilesInDirectory("bundle.*.css").first() }}
+{{#if cssBundle }}
+    <link rel="stylesheet" href="/{{cssBundle.VirtualPath}}">
+{{else}}
+    {{ 'content:/src/css/' |> bundleCss({ minify:false, cache:false, out:'/app.bundle.css' }) }}
+{{/if}}
 
     <i hidden>{{ '/js/hot-fileloader.js' |> ifDebugIncludeScript }}</i>
     <script>NAV_ITEMS = {{ 'GetNavItems' |> execService |> json }}</script>
-    <script>AUTH = {{ 'Authenticate' |> execService({ ifErrorReturn: "null" }) |> json }}</script>
+    <script>AUTH = {{ 'Authenticate'     |> execService({ ifErrorReturn: "null" }) |> json }}</script>
 
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
 
-    {{page}}
+{{page}}
 
     <div id="footer" style="text-align:center; position:absolute; bottom:50px; width:100%;">
         <h4>
@@ -32,36 +37,46 @@
         <div>Copyright &copy; {{ now |> dateFormat('yyyy') }}</div>
     </div>
 
-    {{ [
-        `/lib/vue/dist/vue${min}.js`,
-        `/lib/vue-router/dist/vue-router${min}.js`,
-        '/lib/vue-class-component/vue-class-component.js',
-        '/lib/vue-property-decorator/vue-property-decorator.umd.js',
-        '/lib/@servicestack/client/servicestack-client.umd.js',
-        '/lib/@servicestack/vue/servicestack-vue.umd.js',
-    ] |> bundleJs({ disk:!debug, out:`/js/lib.bundle${dist}.js` }) }}
+{{ [
+    `/lib/js/vue/vue.min.js`,
+    `/lib/js/vue-router/vue-router.min.js`,
+    `/lib/js/vue-class-component/vue-class-component.min.js`,
+    `/lib/js/vue-property-decorator/vue-property-decorator.min.js`,
+    `/lib/js/@servicestack/desktop/servicestack-desktop.min.js`,
+    `/lib/js/@servicestack/client/servicestack-client.min.js`,
+    `/lib/js/@servicestack/vue/servicestack-vue.min.js`,
+] |> map => `<script src="${it}"></script>` |> joinln |> raw }}
+    
+<script>
+var ALIASES = {
+    'vue': { default: Vue },
+    'vue-router': { default: VueRouter },
+    'vue-class-component': VueClassComponent,
+    'vue-property-decorator': VuePropertyDecorator,
+    '@servicestack/vue': ServiceStackVue
+};
+var global = window;
+window.exports = {};
+window.require = function(name) {
+    return ALIASES[name] || exports[name] || window[name] || exports;
+};
+Object.assign(window, window["@servicestack/desktop"], window["@servicestack/client"]);
+</script>
 
-    <script>
-        var ALIASES = {
-            'vue': { default: Vue },
-            'vue-router': { default: VueRouter },
-            'vue-class-component': VueClassComponent,
-            '@servicestack/vue': ServiceStackVue
-        };
-        var global = window;
-        window.exports = {};
-        window.require = function(name) {
-            return ALIASES[name] || exports[name] || window[name] || exports;
-        };
-    </script>
+{{var jsBundle = '/'.findFilesInDirectory("bundle.*.js").first() }}
+{{#if jsBundle }}
+<script src="/{{jsBundle.VirtualPath}}"></script>
+{{else}}
 
-    {{ [
-        'content:/src/components/',
-        'content:/src/shared/',
-        'content:/src/',
-    ] |> bundleJs({ minify:!debug, cache:!debug, disk:!debug, out:`/js/bundle${dist}.js`, iife:true }) }}
+{{ [
+    'content:/src/components/',
+    'content:/src/shared/',
+    'content:/src/',
+] |> bundleJs({ minify:false, cache:false, iife:true, out:`/app.bundle.js` }) }}
 
-    {{ scripts |> raw }}
+{{/if}}
+
+{{ scripts |> raw }}
 
 </body>
 </html>

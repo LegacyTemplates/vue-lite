@@ -5,10 +5,10 @@
     <TypeScriptToolsVersion>2.8</TypeScriptToolsVersion>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
-  
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
+
+  <Target Name="Bundle" BeforeTargets="AfterPublish">
+    <Exec Command="x run _bundle.ss -to /bin/Release/netcoreapp3.1/publish/wwwroot" />
+  </Target>    
 
   <ItemGroup>
     <Content Remove="appsettings.Development.json" />
@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="ServiceStack" Version="5.*" />
+    <PackageReference Include="ServiceStack.Desktop" Version="5.*" />
   </ItemGroup>
 
 </Project>
