@@ -9,7 +9,7 @@
     <title>{{ title ?? 'MyApp' }}</title>
 </head>
 <body>
-{{ 'buttons,svg-auth,app,/assets/css/default.css' |> cssIncludes }}
+{{ 'buttons,svg-auth,app' |> cssIncludes }}
 {{ 'svg-icons' |> cssIncludes |> svgFill('#41B883') }}
 
 {{var cssBundle = '/'.findFilesInDirectory("bundle.*.css").first() }}
