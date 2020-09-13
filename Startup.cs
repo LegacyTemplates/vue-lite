@@ -49,7 +49,6 @@ namespace MyApp
         {
             SetConfig(new HostConfig
             {
-                UseSameSiteCookies = true,
                 AddRedirectParamsToQueryString = true,
                 EmbeddedResourceBaseTypes = { typeof(ServiceStack.Desktop.DesktopAssets) },
                 DebugMode = AppSettings.Get(nameof(HostConfig.DebugMode), HostingEnvironment.IsDevelopment()),
