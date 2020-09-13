@@ -4,6 +4,9 @@ body {
     border-radius: 0;
     background: #41B883 !important;
 }
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+}
 a {
     color: #41B883;
 }
