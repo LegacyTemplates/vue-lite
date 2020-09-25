@@ -43,7 +43,7 @@ After changing your ServiceStack Services, you can re-generate their [Typed Type
 #### Bundling
 
 The integrated `.js` and `.css` bundling is configured to use a fast unminified in-memory bundle for an optimal development experience whilst
-it utilizes a an advanced minified bundle in production releases. 
+it utilizes an advanced minified bundle in production releases. 
 
 When publishing, the project's **Bundle** task:
 
