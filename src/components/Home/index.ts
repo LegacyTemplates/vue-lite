@@ -1,5 +1,4 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { HelloApi } from './HelloApi';
 import { store, signout } from '../../shared';
 
 @Component({ template:  

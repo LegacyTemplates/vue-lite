@@ -1,5 +1,6 @@
 import { Vue, Component, Watch, Prop } from 'vue-property-decorator';
-import { store, bus, client, checkAuth, toPascalCase, splitOnFirst } from '../shared';
+import { store, bus, client, checkAuth } from '../shared';
+import { toPascalCase, splitOnFirst } from '@servicestack/client';
 import { Register } from '../shared/dtos';
 import { Routes, redirect } from '../shared/router';
 

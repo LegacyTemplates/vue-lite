@@ -1,27 +1,10 @@
 import Vue from 'vue';
 import { JsonServiceClient, GetNavItemsResponse, UserAttributes, IAuthSession } from '@servicestack/client';
+import { Authenticate, AuthenticateResponse } from './dtos';
 
 declare let global: any; // populated from package.json/jest
 
 export const client = new JsonServiceClient('/');
-
-export {
-    errorResponse, errorResponseExcept,
-    splitOnFirst, toPascalCase,
-    queryString,
-} from '@servicestack/client';
-
-export {
-    ResponseStatus, ResponseError,
-    Authenticate, AuthenticateResponse,
-    Register,
-    Hello, HelloResponse,
-} from './dtos';
-
-import {
-    ResponseStatus, ResponseError,
-    Authenticate, AuthenticateResponse,
-} from './dtos';
 
 export enum Roles {
   Admin = 'Admin',
