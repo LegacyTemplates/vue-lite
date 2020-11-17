@@ -1,6 +1,6 @@
 # vue-lite
 
-.NET Core 3.1 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
+.NET Core 5.0 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
 
@@ -49,7 +49,7 @@ When publishing, the project's **Bundle** task:
 
 ```xml
 <Target Name="Bundle" BeforeTargets="AfterPublish">
-    <Exec Command="x run _bundle.ss -to /bin/Release/netcoreapp3.1/publish/wwwroot" />
+    <Exec Command="x run _bundle.ss -to /bin/Release/net5/publish/wwwroot" />
 </Target>    
 ```
 
