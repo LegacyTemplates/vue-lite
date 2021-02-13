@@ -12,6 +12,6 @@ export declare class Select extends Vue {
     protected readonly hasError: boolean;
     protected readonly kvpValues: any[];
     protected hasValue(elValue: string): boolean;
-    protected onInputValues(e: InputEvent): string | string[];
+    protected onInputValues(e: InputEvent): any;
 }
 export default Select;
