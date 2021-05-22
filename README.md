@@ -12,6 +12,12 @@ Install with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
 
     $ x new vue-lite ProjectName
 
+Alternatively write new project files directly into an empty repository, using the Directory Name as the ProjectName:
+
+    $ git clone https://github.com/<User>/<ProjectName>.git
+    $ cd <ProjectName>
+    $ x new vue-lite
+
 ### About
 
 This template goal is to provide the richest suite of functionality with the least amount of complexity. 
