@@ -15,7 +15,7 @@ import { bus, store } from './shared';
         </nav>
 
         <div id="content" class="container mt-4">
-        <router-view></router-view>
+            <router-view></router-view>
         </div>
     </div>`
 })

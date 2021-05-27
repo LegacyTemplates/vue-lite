@@ -1,5 +1,9 @@
 body {
 }
+.form-check.form-control {
+    padding-left: 1.75rem;
+    height: auto;
+}
 .navbar {
     border-radius: 0;
     background: #41B883 !important;
@@ -10,11 +14,13 @@ body {
 a {
     color: #41B883;
 }
-.form-check.form-control {
-    padding-left: 1.75rem;
-    height: auto;
+.nav-button-group {
+    display: flex;
+    flex-direction: column;
 }
-.result {
-    margin: 10px;
-    color: #349268;
+.btn-block a {
+    display: block;
+}
+.nav-button-group .btn-block {
+    margin-bottom: .25rem;
 }

@@ -6,12 +6,12 @@ import { Hello } from '../../shared/dtos';
 @Component({ template:  
     `<div class="form-group">
         <v-input placeholder="Your name" v-model="txtName" />
-        <h3 class="result pt-2">{{ result }}</h3>
+        <h3 class="result pt-2 text-success">{{ result }}</h3>
     </div>`,
 })
 export class HelloApi extends Vue {
     @Prop() public name: string;
-    public txtName: string = this.name;
+    public txtName: string = '';
     public result: string = '';
 
     public mounted() {
@@ -35,4 +35,4 @@ export class HelloApi extends Vue {
     }
 }
 export default HelloApi;
-Vue.component('hello-api', HelloApi);
+Vue.component('HelloApi', HelloApi);
