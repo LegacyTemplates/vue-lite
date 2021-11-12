@@ -1,6 +1,6 @@
 # vue-lite
 
-.NET 5.0 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
+.NET 6.0 simple + lite (npm-free) Vue SPA using TypeScript with integrated bundling + hot reloading
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
 
