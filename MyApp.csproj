@@ -7,6 +7,10 @@
     <TypeScriptToolsVersion>latest</TypeScriptToolsVersion>
     <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
   </PropertyGroup>
+  <ItemGroup>
+    <Using Include="MyApp" />
+    <Using Include="ServiceStack" />
+  </ItemGroup>
 
   <Target Name="Bundle" BeforeTargets="AfterPublish">
     <Exec Command="x run _bundle.ss -to /bin/Release/net6.0/publish/wwwroot" />
