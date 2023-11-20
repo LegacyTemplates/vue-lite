@@ -9,19 +9,19 @@
 
 [![](https://raw.githubusercontent.com/ServiceStack/Assets/master/csharp-templates/vue-lite.png)](http://vue-lite.web-templates.io/)
 
-> Browse [source code](https://github.com/NetCoreTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-lite.web-templates.io)
+> Browse [source code](https://github.com/LegacyTemplates/vue-lite) and view live demo [vue-lite.web-templates.io](http://vue-lite.web-templates.io)
 
 Install with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
 
     $ dotnet tool install -g x
 
-    $ x new vue-lite ProjectName
+    $ x new LegacyTemplates/vue-lite ProjectName
 
 Alternatively write new project files directly into an empty repository, using the Directory Name as the ProjectName:
 
     $ git clone https://github.com/<User>/<ProjectName>.git
     $ cd <ProjectName>
-    $ x new vue-lite
+    $ x new LegacyTemplates/vue-lite
 
 ### About
 
@@ -64,7 +64,7 @@ When publishing, the project's **Bundle** task:
 </Target>    
 ```
 
-Runs [_bundle.ss](https://github.com/NetCoreTemplates/vue-lite/blob/master/_bundle.ss) to produce an optimized, minified & hashed bundle using 
+Runs [_bundle.ss](https://github.com/LegacyTemplates/vue-lite/blob/master/_bundle.ss) to produce an optimized, minified & hashed bundle using 
 ServiceStack's [built-in bundling](https://docs.servicestack.net/html-css-and-javascript-minification#optimal-library-bundles) 
 embedded in the [dotnet tools](https://docs.servicestack.net/dotnet-tool) which is pre-configured to use [NUglify's](https://github.com/xoofx/NUglify) 
 advanced compression.
